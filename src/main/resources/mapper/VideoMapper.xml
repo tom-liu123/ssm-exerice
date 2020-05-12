@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.fuzui.StudentInfo.mapper.VideoMapper">
+
+
+    <!-- 为了返回List，类型而定义的resultMap -->
+    <resultMap type="Video" id="resultListVideo">
+        <result column="videoid" property="videoid" />
+        <result column="videohref" property="videohref" />
+        <result column="videotype" property="videotype" />
+         <result column="videodesc" property="videodesc" />
+
+
+    </resultMap>
+
+    <!-- 添加课程信息 -->
+    <insert id="insertVideo" parameterType="Video">
+		insert into video(videoid,videohref,videotype,videodesc)
+		value (#{videoid}, #{videohref}, #{videotype}, #{videodesc})
+	</insert>
+
+    <!-- 根据课程编号删除课程信息 -->
+    <delete id="deleteVideo" parameterType="String">
+		delete from video where videoid=#{videoid}
+	</delete>
+
+  
+	<!-- 根据视频编号查询出视频实体 -->
+	<select id="getByVideoid" parameterType="String" resultType="net.fuzui.StudentInfo.pojo.Video">
+		SELECT * from video where videoid = #{videoid}
+	</select>
+   
+
+    <!-- 查询全部课程 -->
+    <select id="selectVideoBySql" parameterType="map" resultMap="resultListVideo">
+		select * from video <!-- limit #{pageNo} , #{pageSize} -->
+	</select>
+
+   
+
+   
+   
+    <!-- ajax验证课程编号是否存在 -->
+    <select id="ajaxQueryByVideoid" resultType="java.lang.String">
+		select videoid from video where videoid = #{videoid}
+	</select>
+
+</mapper>

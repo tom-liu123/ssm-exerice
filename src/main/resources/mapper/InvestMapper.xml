@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.fuzui.StudentInfo.mapper.InvestMapper">
+
+
+    <!-- 为了返回List，类型而定义的resultMap -->
+    <resultMap type="Invest" id="resultListInvest">
+        <result column="investid" property="investid" />
+        <result column="month" property="month" />
+        <result column="info" property="info" />
+         <result column="price" property="price" />
+         <result column="oldprice" property="oldprice" />
+         <result column="represent" property="represent" />
+
+         
+
+
+    </resultMap>
+
+    <!-- 添加课程信息 -->
+    <insert id="insertInvest" parameterType="Invest">
+		insert into invest(investid,month,info,price,oldprice,represent)
+		value (#{investid}, #{month}, #{info}, #{price}, #{oldprice}, #{represent})
+	</insert>
+
+    <!-- 根据课程编号删除课程信息 -->
+    <delete id="deleteInvest" parameterType="String">
+		delete from invest where investid=#{investid}
+	</delete>
+
+  
+	<!-- 根据视频编号查询出视频实体 -->
+	<select id="getByInvestid" parameterType="String" resultType="net.fuzui.StudentInfo.pojo.Invest">
+		SELECT * from invest where investid = #{investid}
+	</select>
+   
+
+	<!-- 根据视频编号查询出视频实体 -->
+	<select id="getByMonth" parameterType="String" resultType="net.fuzui.StudentInfo.pojo.Invest">
+		SELECT * from invest where month = #{month}
+	</select>
+   
+    <!-- 查询全部课程 -->
+    <select id="selectInvestBySql" parameterType="map" resultMap="resultListInvest">
+		select * from invest <!-- limit #{pageNo} , #{pageSize} -->
+	</select>
+
+   
+
+   
+   
+    <!-- ajax验证课程编号是否存在 -->
+    <select id="ajaxQueryByInvestid" resultType="java.lang.String">
+		select investid from invest where investid = #{investid}
+	</select>
+
+</mapper>

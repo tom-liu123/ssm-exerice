@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.fuzui.StudentInfo.mapper.NoticeMapper">
+
+
+    <!-- 为了返回List，类型而定义的resultMap -->
+    <resultMap type="Notice" id="resultListNotice">
+        <result column="noticeid" property="noticeid" />
+        <result column="noticecontent" property="noticecontent" />
+        <result column="noticetime" property="noticetime" />
+
+
+    </resultMap>
+
+    <!-- 添加课程信息 -->
+    <insert id="insertNotice" parameterType="Notice">
+		insert into notice(noticeid,noticecontent,noticetime)
+		value (#{noticeid}, #{noticecontent}, #{noticetime})
+	</insert>
+
+    <!-- 根据课程编号删除课程信息 -->
+    <delete id="deleteNotice" parameterType="String">
+		delete from notice where noticeid=#{noticeid}
+	</delete>
+
+  
+
+   	<!-- 根据公告编号查询出学生实体 -->
+	<select id="getByNoticeid" parameterType="String" resultType="net.fuzui.StudentInfo.pojo.Notice">
+		SELECT * from notice where noticeid = #{noticeid}
+	</select>
+
+    <!-- 查询全部课程 -->
+    <select id="selectNoticeBySql" parameterType="map" resultMap="resultListNotice">
+		select * from notice <!-- limit #{pageNo} , #{pageSize} -->
+	</select>
+
+   
+
+   
+   
+    <!-- ajax验证课程编号是否存在 -->
+    <select id="ajaxQueryByNoticeid" resultType="java.lang.String">
+		select noticeid from notice where noticeid = #{noticeid}
+	</select>
+
+</mapper>

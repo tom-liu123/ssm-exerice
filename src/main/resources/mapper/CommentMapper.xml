@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.fuzui.StudentInfo.mapper.CommentMapper">
+
+
+    <!-- 为了返回List，类型而定义的resultMap -->
+    <resultMap type="Comment" id="resultListComment">
+        <result column="commentid" property="commentid" />
+        <result column="sid" property="sid" />
+        <result column="sname" property="sname" />
+        <result column="commentcont" property="commentcont" />
+        <result column="commentreply" property="commentreply" />
+
+    </resultMap>
+
+
+
+    <!-- 根据课程编号删除课程信息 -->
+    <delete id="deleteComment" parameterType="String">
+		delete from comment where commentid=#{commentid}
+	</delete>
+
+
+
+
+    <!-- 查询全部课程 -->
+    <select id="selectCommentBySql" parameterType="map" resultMap="resultListComment">
+		select * from comment <!-- limit #{pageNo} , #{pageSize} -->
+	</select>
+
+	<!-- 修改留言信息 -->
+	<update id="modifyComment">
+		update comment set commentreply=#{commentreply} where commentid =#{commentid}
+	</update>
+
+
+
+    <!-- ajax验证课程编号是否存在 -->
+    <select id="ajaxQueryByCommentid" resultType="java.lang.String">
+		select commentid from comment where commentid = #{commentid}
+	</select>
+
+</mapper>
